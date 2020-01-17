@@ -16,7 +16,7 @@ def fighter_info
 site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/fighter"
 
 doc = Nokogiri::HTML(open(site))
-puts doc.css("#content")
+puts doc.css("#content").css("p")[1..3]
 binding.pry
 end 
 end 
