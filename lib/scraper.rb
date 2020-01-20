@@ -1,13 +1,20 @@
 class Scraper
     def self.character_classes
+        
         site = "https://dnd.wizards.com/%3Cnolink%3E/classes"
         doc = Nokogiri::HTML(open(site))
         starting_list =  doc.css(".item").each {|klass| puts klass.children[1].children[0].attributes["alt"].value}
-        puts starting_list.each do |khlass| 
-            if khlass.include? ("div")
-            khlass.delete
-            end 
-        end 
+        starting_list
+        
+    end 
+    def self.race_choices
+    
+        site = "https://dnd.wizards.com/%3Cnolink%3E/races"
+
+        doc = Nokogiri::HTML(open(site))
+        doc_2 = doc.css('.item-content').css("h2").css("span").each {|race| race.text}
+        puts doc_2.children
+    
     end 
 
     def self.fighter_info
@@ -21,10 +28,10 @@ class Scraper
 
         doc = Nokogiri::HTML(open(site))
         puts doc.css("#content").css("p")[1..3]
+            
     end 
     def self.rouge_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/rouge"
-
+        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/rogue"
         doc = Nokogiri::HTML(open(site))
         puts doc.css("#content").css("p")[1..3]
     end 
@@ -34,12 +41,12 @@ class Scraper
         doc = Nokogiri::HTML(open(site))
         puts doc.css("#content").css("p")[1..3]
     end 
-    def self.race_choices
-        site = "https://dnd.wizards.com/%3Cnolink%3E/races"
-
+    def self.ranger_info
+        site = 'https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/ranger' 
         doc = Nokogiri::HTML(open(site))
-        puts doc.css('.item-content').css('span')
-    end 
+        puts doc.css("#content").css("p")[1..3]
+    end
+   
     def self.half_orc_info
         site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/halforc"
 
@@ -65,7 +72,7 @@ class Scraper
         puts doc.css('.intro').css('p')[2..4]
     end 
     def self.halfling_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/halfing"
+        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/halfling"
 
         doc = Nokogiri::HTML(open(site))
         puts doc.css('.intro').css('p')[2..4] 
