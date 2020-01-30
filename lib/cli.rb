@@ -1,23 +1,32 @@
 
 class CLI
     attr_accessor :starter_input, :class_input, :race_input, :human_menu_input, :elf_menu_input, :half_orc_menu_input, :dwarf_menu_input, :halfling_menu_input, :gnome_menu_input, :fighter_menu_input, :wizard_menu_input, :cleric_menu_input, :rouge_menu_input, :ranger_menu_input
-    def initialize
+   def initialize
+        start 
+    end 
+    def exit 
+        p "Good-Bye!"
     end 
     def start
+        puts "
+        
+        
+        "
         puts "Welcome Adventurer! Today is the beginning of a new world, full of dungeons and giant lizard monsters!"
         puts "Now Adventurer, what is your name?(Write out your name!)"
-        @starter_input = gets 
-        puts "#{@starter_input}, is this your name?(y/n)"
+        @starter_input = gets.chomp
+        puts "So your name is #{@starter_input}?(y/n)"
         answer = gets.chomp
         if answer == 'y'
         puts "Ha! That's quite a name! Let's Get Started."
         race_options
+        elsif answer == "exit"
+            exit
         else
             puts "Let's try this again." 
             start
             
         end 
-
     end 
     def race_options
         puts "So, where to begin. Well,#{@starter_input}, what land do you hail from?(Select a race by pressing 1-6)"
@@ -59,8 +68,10 @@ class CLI
             @human_menu_input = gets.chomp
             if @human_menu_input == "y"
                 @race_input = "Human"
-                Scraper.human_info
-                puts "
+                Scraper.race_details(@race_input.downcase)
+               race = Race.all.find {|race| race.name == @race_input.downcase}
+             puts race.details
+               puts "
                 
                 "
                 class_option?
@@ -78,7 +89,9 @@ class CLI
             @elf_menu_input = gets.chomp
             if @elf_menu_input == "y"
                 @race_input = "Elf"
-                Scraper.elf_info
+                Scraper.race_details(@race_input.downcase)
+               race = Race.all.find {|race| race.name == @race_input.downcase}
+             puts race.details
                 puts "
                 
                 "
@@ -96,7 +109,9 @@ class CLI
             @dwarf_menu_input = gets.chomp
             if @dwarf_menu_input == "y"
                 @race_input = "Dwarf"
-                Scraper.dwarf_info
+                Scraper.race_details(@race_input.downcase)
+               race = Race.all.find {|race| race.name == @race_input.downcase}
+             puts race.details
                 puts "
                 
                 "
@@ -113,11 +128,14 @@ class CLI
             puts " Did you want to know more about Half-Orcs? Or did ya mean to tell me you were somethin' different?(y/n)"
             @half_orc_menu_input = gets.chomp
             if @half_orc_menu_input == "y"
-                @race_input = "Half-Orc"
-                Scraper.half_orc_info
+                @race_input = "HalfOrc"
+                Scraper.race_details(@race_input.downcase)
+               race = Race.all.find {|race| race.name == @race_input.downcase}
+             puts race.details
                 puts "
                 
                 "
+                @race_input = "Half-Orc"
                 class_option?
             elsif @half_orc_menu_input == "n"
                 race_options
@@ -132,7 +150,9 @@ class CLI
             @halfling_menu_input = gets.chomp
             if @halfling_menu_input == "y"
                 @race_input = "Halfling"
-                Scraper.halfling_info
+                Scraper.race_details(@race_input.downcase)
+               race = Race.all.find {|race| race.name == @race_input.downcase}
+             puts race.details
                 puts "
                 
                 "
@@ -150,7 +170,9 @@ class CLI
             @gnome_menu_input = gets.chomp
             if @gnome_menu_input == "y"
                 @race_input = "Gnome"
-                Scraper.gnome_info
+                Scraper.race_details(@race_input.downcase)
+               race = Race.all.find {|race| race.name == @race_input.downcase}
+             puts race.details
                 puts "
                 
                 "
@@ -193,7 +215,9 @@ class CLI
             @fighter_menu_input = gets.chomp
             if @fighter_menu_input == "y"
                 @class_input = "Fighter"
-                Scraper.fighter_info
+                Scraper.class_details(@class_input.downcase)
+               khlass = Class.all.find {|khlass| khlass.name == @class_input.downcase}
+             puts khlass.details
                 begin?
             elsif
                 @fighter_menu_input == "n" 
@@ -210,7 +234,9 @@ class CLI
             @wizard_menu_input = gets.chomp
             if @wizard_menu_input == "y"
                 @class_input = "Wizard"
-                Scraper.wizard_info
+                Scraper.class_details(@class_input.downcase)
+               khlass = Class.all.find {|khlass| khlass.name == @class_input.downcase}
+             puts khlass.details
                 begin?
             elsif
                 @wizard_menu_input == "n" 
@@ -226,7 +252,9 @@ class CLI
             @cleric_menu_input = gets.chomp
             if @cleric_menu_input == "y"
                 @class_input = "Cleric"
-                Scraper.cleric_info
+                Scraper.class_details(@class_input.downcase)
+               khlass = Class.all.find {|khlass| khlass.name == @class_input.downcase}
+             puts khlass.details
                 begin?
             elsif
                 @cleric_menu_input == "n" 
@@ -237,12 +265,14 @@ class CLI
             end 
         end 
         def rouge_option_menu
-            puts "Ah, a Rouge, child of the night. Would you like to know more about Rouges?"
+            puts "Ah, a Rogue, child of the night. Would you like to know more about Rogues?"
                 puts "Or did ya mean to tell me somethin' different?(y/n)"
             @rouge_menu_input = gets.chomp
             if @rouge_menu_input == "y"
-                @class_input = "Rouge"
-                Scraper.rouge_info
+                @class_input = "Rogue"
+                Scraper.class_details(@class_input.downcase)
+               khlass = Class.all.find {|khlass| khlass.name == @class_input.downcase}
+             puts khlass.details
                 begin?
             elsif
                 @rouge_menu_input == "n" 
@@ -253,10 +283,14 @@ class CLI
             end 
         end 
         def ranger_option_menu
+            puts "Well Ranger, has the forest stirred so much that it convinced you to come here? Would you like to know more about Rangers?"
+            puts "Or did ya mean to tell me somethin' different?(y/n)"
             @ranger_menu_input = gets.chomp
             if @ranger_menu_input == "y"
                 @class_input = "Ranger"
-                Scraper.ranger_info
+                Scraper.class_details(@class_input.downcase)
+               khlass = Class.all.find {|khlass| khlass.name == @class_input.downcase}
+             puts khlass.details
                 begin?
             elsif
                 @ranger_menu_input == "n" 
@@ -268,6 +302,10 @@ class CLI
         end 
 
         def begin?
+            puts "
+            
+            
+            "
             puts "So #{@starter_input}, you're a #{@race_input} #{@class_input}. Does that sound right? (y/n)"
             @final_input = gets.chomp
             if @final_input == 'y'

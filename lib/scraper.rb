@@ -1,3 +1,4 @@
+
 class Scraper
     def self.character_classes
         
@@ -12,75 +13,21 @@ class Scraper
         site = "https://dnd.wizards.com/%3Cnolink%3E/races"
 
         doc = Nokogiri::HTML(open(site))
-        doc_2 = doc.css('.item-content').css("h2").css("span").each {|race| race.text}
+        doc_2 = doc.css('.item-content').css("h2").css("span") #.each {|race| race.text}
         puts doc_2.children
     
     end 
-
-    def self.fighter_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/fighter"
-
+    def self.class_details(user_input)
+        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/#{user_input}"
         doc = Nokogiri::HTML(open(site))
-        puts doc.css("#content").css("p")[1..3]
+        details = doc.css("#content").css("p")[1..3]
+        Class.new(user_input,details)
     end 
-    def self.wizard_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/wizard"
-
+    def self.race_details(user_input)
+        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/#{user_input}"
         doc = Nokogiri::HTML(open(site))
-        puts doc.css("#content").css("p")[1..3]
-            
-    end 
-    def self.rouge_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/rogue"
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css("#content").css("p")[1..3]
-    end 
-    def self.cleric_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/cleric"
-
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css("#content").css("p")[1..3]
-    end 
-    def self.ranger_info
-        site = 'https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/ranger' 
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css("#content").css("p")[1..3]
+         details = doc.css('.intro').css('p')[2..4]
+         Race.new(user_input,details)
     end
-   
-    def self.half_orc_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/halforc"
 
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css('.intro').css('p')[2..4]
-    end 
-    def self.human_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/human"
-
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css('.intro').css('p')[2..4]
-    end 
-    def self.elf_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/elf"
-
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css('.intro').css('p')[2..4]
-    end 
-    def self.dwarf_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/dwarf"
-
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css('.intro').css('p')[2..4]
-    end 
-    def self.halfling_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/halfling"
-
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css('.intro').css('p')[2..4] 
-    end 
-    def self.gnome_info
-        site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/gnome"
-
-        doc = Nokogiri::HTML(open(site))
-        puts doc.css('.intro').css('p')[2..4]
-    end 
 end 
