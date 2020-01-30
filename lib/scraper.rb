@@ -20,13 +20,13 @@ class Scraper
     def self.class_details(user_input)
         site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/classes/#{user_input}"
         doc = Nokogiri::HTML(open(site))
-        details = doc.css("#content").css("p")[1..3]
+        details = doc.css("#content").css("p")[1..3].text
         Class.new(user_input,details)
     end 
     def self.race_details(user_input)
         site = "https://dnd.wizards.com/dungeons-and-dragons/what-is-dnd/races/#{user_input}"
         doc = Nokogiri::HTML(open(site))
-         details = doc.css('.intro').css('p')[2..4]
+         details = doc.css('.intro').css('p')[2..4].text
          Race.new(user_input,details)
     end
 
